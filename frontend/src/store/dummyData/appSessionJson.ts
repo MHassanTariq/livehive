@@ -1,0 +1,60 @@
+import { AppSessionCSV } from "../types";
+
+export const appSessionCSV: AppSessionCSV[] = [
+  {
+    participant: "TestUser",
+    app_package: "com.google.android.apps.nexuslauncher",
+    app_name: "Pixel Launcher",
+    start_time: "Thu May 25 12:18:59 GMT+5 2023",
+    end_time: "Thu May 25 12:19:01 GMT+5 2023",
+    duration: "1",
+  },
+  {
+    participant: "TestUser",
+    app_package: "com.android.documentsui",
+    app_name: "Files",
+    start_time: "Thu May 25 12:18:49 GMT+5 2023",
+    end_time: "Thu May 25 12:18:50 GMT+5 2023",
+    duration: "0",
+  },
+  {
+    participant: "TestUser",
+    app_package: "com.android.systemui",
+    app_name: "System UI",
+    start_time: "Thu May 25 12:15:23 GMT+5 2023",
+    end_time: "Thu May 25 12:15:23 GMT+5 2023",
+    duration: "0",
+  },
+  {
+    participant: "TestUser",
+    app_package: "android",
+    app_name: "Android System",
+    start_time: "Thu May 25 12:15:23 GMT+5 2023",
+    end_time: "Thu May 25 12:15:23 GMT+5 2023",
+    duration: "0",
+  },
+  {
+    participant: "TestUser",
+    app_package: "com.google.android.apps.docs",
+    app_name: "Drive",
+    start_time: "Thu May 25 12:15:30 GMT+5 2023",
+    end_time: "Thu May 25 12:15:31 GMT+5 2023",
+    duration: "1",
+  },
+  {
+    participant: "TestUser",
+    app_package: "csv.file.reader",
+    app_name: "CSV file viewer",
+    start_time: "Thu May 25 12:15:23 GMT+5 2023",
+    end_time: "Thu May 25 12:15:30 GMT+5 2023",
+    duration: "6",
+  },
+  {
+    participant: "TestUser",
+    app_package: "com.android.settings",
+    app_name: "Settings",
+    start_time: "Thu May 25 12:14:42 GMT+5 2023",
+    end_time: "Thu May 25 12:14:43 GMT+5 2023",
+    duration: "0",
+  },
+];
