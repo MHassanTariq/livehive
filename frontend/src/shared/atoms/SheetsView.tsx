@@ -13,16 +13,17 @@ const SheetViews = ({ sheetData }: Props) => {
     return "";
   }
 
+  const gridStyles = `grid grid-cols-${keys} bg-primary p-1`;
   return (
     <div className="mt-5">
-      <div className={`grid grid-cols-${keys} gap-1 bg-primary p-1`}>
+      <div className={gridStyles}>
         {csvData.map((data, index) => (
           <div
-            className="flex justify-center items-center bg-bg_color"
+            className="flex justify-center items-center bg-bg_color m-0.5"
             key={index.toString()}
           >
             <p
-              className={`text-base text-text_color ${headingTextStyles(
+              className={`text-base text-text_color p-4 ${headingTextStyles(
                 index
               )}`}
             >

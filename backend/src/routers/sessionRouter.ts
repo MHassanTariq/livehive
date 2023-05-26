@@ -1,11 +1,10 @@
 import { Router } from "express";
+import appController from "../controllers/appController";
 
 export function appSessionRouter() {
   const router = Router();
 
-  router.get("/", (req, res) => {
-    res.json({ msg: "This is appSession router get" });
-  });
+  router.get("/", appController.findAppSession);
 
   return router;
 }
