@@ -14,6 +14,7 @@ module.exports = {
       error: "#A85858",
       placeholder: "#848484",
       bg_modal: "rgba(0,0,0,0.2)",
+      white: "#FFF",
     },
   },
   plugins: [],

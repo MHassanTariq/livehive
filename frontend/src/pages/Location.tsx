@@ -9,13 +9,15 @@ import {
   useSearchLocationMutation,
 } from "../store/services/createApi";
 import { Loader } from "../shared/atoms/Loader";
+import { DEFAULT_PAGINATION_LIMIT } from "../store/services/helper";
+import { calculateStats } from "../utils/helper";
 
 const Location = () => {
   const [infoGraphic, setInfoGraphic] = useState<InfoGraphics>(
     InfoGraphics.Sheet
   );
   const [page, setPage] = useState(0);
-  const { data: locationListing, isLoading: isLocationLoading } =
+  const { data: response, isLoading: isLocationLoading } =
     useGetLocationListingQuery({ offset: page });
   const [
     fetchSearchResults,
@@ -32,18 +34,28 @@ const Location = () => {
 
   // render functions
   function renderSheets() {
-    const data = shouldShowSearch ? searchedResults : locationListing;
+    const data = shouldShowSearch ? searchedResults : response?.data;
+    const count =
+      (shouldShowSearch ? searchedResults?.length : response?.count) ?? 0;
     if (!data) return;
     if (isSearching) return <Loader />;
-    if (infoGraphic === InfoGraphics.Sheet)
-      return <SheetsView sheetData={{ type: "Location", data }} />;
+    if (infoGraphic !== InfoGraphics.Sheet) return;
+
+    // calculate stats
+    const stats = calculateStats(
+      count,
+      page,
+      DEFAULT_PAGINATION_LIMIT,
+      setPage
+    );
+    return <SheetsView sheetData={{ type: "Location", data }} stats={stats} />;
   }
 
   function renderGraphs() {
-    if (!locationListing) return;
+    if (!response?.data) return;
     if (infoGraphic === InfoGraphics.Graphs) {
       return (
-        <GraphsView typedSheet={{ type: "Location", data: locationListing }} />
+        <GraphsView typedSheet={{ type: "Location", data: response.data }} />
       );
     }
   }

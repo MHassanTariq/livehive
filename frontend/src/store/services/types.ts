@@ -13,6 +13,11 @@ export type Pagination = {
   limit?: number;
 };
 
+export type ListingWithCount<T> = {
+  count: number;
+  data: T[];
+};
+
 export type Location = {
   user: User;
   lat: number;

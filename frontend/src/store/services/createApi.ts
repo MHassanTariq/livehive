@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import {
   AppSession,
+  ListingWithCount,
   Location,
   Pagination,
   SearchQuery,
@@ -28,13 +29,13 @@ const endpoints = streamMatricsApi.injectEndpoints({
     /**
      * ----------- Location --------------
      */
-    getLocationListing: builder.query<Location[], Pagination>({
+    getLocationListing: builder.query<ListingWithCount<Location>, Pagination>({
       query: (pagination) => {
         const { limit, offset } = getPaginationWithValues(pagination);
         return `/location?limit=${limit}&offset=${offset}`;
       },
       transformResponse: (data: any) => {
-        return data.result;
+        return { data: data.result, count: data.count };
       },
     }),
     searchLocation: builder.mutation<Location[], SearchQuery>({
@@ -47,13 +48,16 @@ const endpoints = streamMatricsApi.injectEndpoints({
     /**
      * ----------- App Session --------------
      */
-    getAppSessionListing: builder.query<AppSession[], Pagination>({
+    getAppSessionListing: builder.query<
+      ListingWithCount<AppSession>,
+      Pagination
+    >({
       query: (pagination) => {
         const { limit, offset } = getPaginationWithValues(pagination);
         return `/app?limit=${limit}&offset=${offset}`;
       },
       transformResponse: (data: any) => {
-        return data.result;
+        return { data: data.result, count: data.count };
       },
     }),
     searchAppSession: builder.mutation<AppSession[], SearchQuery>({
@@ -66,13 +70,16 @@ const endpoints = streamMatricsApi.injectEndpoints({
     /**
      * ----------- Web Link --------------
      */
-    getWebLinkListing: builder.query<WebLinkResponse[], Pagination>({
+    getWebLinkListing: builder.query<
+      ListingWithCount<WebLinkResponse>,
+      Pagination
+    >({
       query: (pagination) => {
         const { limit, offset } = getPaginationWithValues(pagination);
         return `/weblink?limit=${limit}&offset=${offset}`;
       },
       transformResponse: (data: any) => {
-        return data.result;
+        return { data: data.result, count: data.count };
       },
     }),
     searchWeblink: builder.mutation<WebLinkResponse[], SearchQuery>({

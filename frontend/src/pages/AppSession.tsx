@@ -9,13 +9,15 @@ import {
 } from "../store/services/createApi";
 import GraphsView from "../shared/atoms/GraphsView";
 import { Loader } from "../shared/atoms/Loader";
+import { calculateStats } from "../utils/helper";
+import { DEFAULT_PAGINATION_LIMIT } from "../store/services/helper";
 
 const AppSession = () => {
   const [infoGraphic, setInfoGraphic] = useState<InfoGraphics>(
     InfoGraphics.Sheet
   );
   const [page, setPage] = useState(0);
-  const { data: appSession, isLoading: isAppSessionloading } =
+  const { data: response, isLoading: isAppSessionloading } =
     useGetAppSessionListingQuery({ offset: page });
   const [
     fetchSearchResults,
@@ -32,17 +34,27 @@ const AppSession = () => {
 
   // render functions
   function renderSheets() {
-    const data = shouldShowSearch ? searchedResults : appSession;
+    const data = shouldShowSearch ? searchedResults : response?.data;
+    const count =
+      (shouldShowSearch ? searchedResults?.length : response?.count) ?? 0;
     if (!data) return;
     if (isSearching) return <Loader />;
-    if (infoGraphic === InfoGraphics.Sheet)
-      return <SheetsView sheetData={{ type: "Apps", data }} />;
+    if (infoGraphic !== InfoGraphics.Sheet) return;
+
+    // calculate stats
+    const stats = calculateStats(
+      count,
+      page,
+      DEFAULT_PAGINATION_LIMIT,
+      setPage
+    );
+    return <SheetsView sheetData={{ type: "Apps", data }} stats={stats} />;
   }
 
   function renderGraphs() {
-    if (!appSession) return;
+    if (!response) return;
     if (infoGraphic === InfoGraphics.Graphs) {
-      return <GraphsView typedSheet={{ type: "Apps", data: appSession }} />;
+      return <GraphsView typedSheet={{ type: "Apps", data: response.data }} />;
     }
   }
 

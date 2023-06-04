@@ -1,11 +1,13 @@
 import { convertTypedDataToSheetData } from "../../store/adapterFunctions";
 import { TypedSheets } from "../../store/services/types";
+import DataStatsWithPageBtns, { DataStatsProps } from "./DataStatsWithPageBtns";
 
 interface Props {
   sheetData: TypedSheets;
+  stats: DataStatsProps;
 }
 
-const SheetViews = ({ sheetData }: Props) => {
+const SheetViews = ({ sheetData, stats }: Props) => {
   const { csvData, keys } = convertTypedDataToSheetData(sheetData);
   function headingTextStyles(index: number) {
     if (index < keys) return `font-bold text-lg`;
@@ -14,6 +16,7 @@ const SheetViews = ({ sheetData }: Props) => {
 
   return (
     <div className="mt-5">
+      <DataStatsWithPageBtns {...stats} />
       <div className={`grid grid-cols-${keys} bg-primary p-1`}>
         {csvData.map((data, index) => (
           <div

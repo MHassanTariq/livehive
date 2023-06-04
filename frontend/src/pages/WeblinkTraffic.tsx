@@ -4,19 +4,20 @@ import ScreenWithHeader from "../shared/components/ScreenWithHeader";
 import { InfoGraphics } from "../store/services/types";
 import SheetsView from "../shared/atoms/SheetsView";
 import {
-  useGetAppSessionListingQuery,
   useGetWebLinkListingQuery,
   useSearchWeblinkMutation,
 } from "../store/services/createApi";
 import GraphsView from "../shared/atoms/GraphsView";
 import { Loader } from "../shared/atoms/Loader";
+import { calculateStats } from "../utils/helper";
+import { DEFAULT_PAGINATION_LIMIT } from "../store/services/helper";
 
 const WeblinkTraffic = () => {
   const [infoGraphic, setInfoGraphic] = useState<InfoGraphics>(
     InfoGraphics.Sheet
   );
   const [page, setPage] = useState(0);
-  const { data: weblink, isLoading: isWeblinkLoading } =
+  const { data: response, isLoading: isWeblinkLoading } =
     useGetWebLinkListingQuery({ offset: page });
   const [
     fetchSearchResults,
@@ -33,17 +34,29 @@ const WeblinkTraffic = () => {
 
   // render functions
   function renderSheets() {
-    const data = shouldShowSearch ? searchedResults : weblink;
+    const data = shouldShowSearch ? searchedResults : response?.data;
+    const count =
+      (shouldShowSearch ? searchedResults?.length : response?.count) ?? 0;
     if (!data) return;
     if (isSearching) return <Loader />;
-    if (infoGraphic === InfoGraphics.Sheet)
-      return <SheetsView sheetData={{ type: "Weblink", data }} />;
+    if (infoGraphic !== InfoGraphics.Sheet) return;
+
+    // calculate stats
+    const stats = calculateStats(
+      count,
+      page,
+      DEFAULT_PAGINATION_LIMIT,
+      setPage
+    );
+    return <SheetsView sheetData={{ type: "Weblink", data }} stats={stats} />;
   }
 
   function renderGraphs() {
-    if (!weblink) return;
+    if (!response) return;
     if (infoGraphic === InfoGraphics.Graphs) {
-      return <GraphsView typedSheet={{ type: "Weblink", data: weblink }} />;
+      return (
+        <GraphsView typedSheet={{ type: "Weblink", data: response.data }} />
+      );
     }
   }
 
