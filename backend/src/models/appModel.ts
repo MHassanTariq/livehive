@@ -1,12 +1,17 @@
 import mongoose from "mongoose";
 
 const AppSchema = new mongoose.Schema({
-  userId: { type: mongoose.Schema.Types.ObjectId, required: true },
+  user: {
+    type: Object,
+    name: { type: String, required: true },
+    email: String,
+    required: true,
+  },
   app_package: String,
   app_name: String,
-  start_time: String,
-  end_time: String,
-  duration: String,
+  start_time: Date,
+  end_time: Date,
+  duration: Number,
 });
 
 const App = mongoose.model("App", AppSchema);
