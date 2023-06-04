@@ -13,6 +13,7 @@ module.exports = {
       logo_color: "#00B9FE",
       error: "#A85858",
       placeholder: "#848484",
+      bg_modal: "rgba(0,0,0,0.2)",
     },
   },
   plugins: [],

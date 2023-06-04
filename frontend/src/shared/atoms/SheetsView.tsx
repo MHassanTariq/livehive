@@ -1,5 +1,5 @@
 import { convertTypedDataToSheetData } from "../../store/adapterFunctions";
-import { TypedSheets } from "../../store/types";
+import { TypedSheets } from "../../store/services/types";
 
 interface Props {
   sheetData: TypedSheets;
@@ -7,23 +7,21 @@ interface Props {
 
 const SheetViews = ({ sheetData }: Props) => {
   const { csvData, keys } = convertTypedDataToSheetData(sheetData);
-
   function headingTextStyles(index: number) {
     if (index < keys) return `font-bold text-lg`;
     return "";
   }
 
-  const gridStyles = `grid grid-cols-${keys} bg-primary p-1`;
   return (
     <div className="mt-5">
-      <div className={gridStyles}>
+      <div className={`grid grid-cols-${keys} bg-primary p-1`}>
         {csvData.map((data, index) => (
           <div
             className="flex justify-center items-center bg-bg_color m-0.5"
             key={index.toString()}
           >
             <p
-              className={`text-base text-text_color p-4 ${headingTextStyles(
+              className={`text-sm text-text_color p-4 break-words ${headingTextStyles(
                 index
               )}`}
             >

@@ -1,38 +1,55 @@
 import { useState } from "react";
 import AnalyticsHeader from "../shared/atoms/AnalyticHeader";
 import ScreenWithHeader from "../shared/components/ScreenWithHeader";
-import { InfoGraphics } from "../store/types";
+import { InfoGraphics } from "../store/services/types";
 import SheetsView from "../shared/atoms/SheetsView";
-import { locationCSV } from "../store/dummyData/locationJson";
 import GraphsView from "../shared/atoms/GraphsView";
+import {
+  useGetLocationListingQuery,
+  useSearchLocationMutation,
+} from "../store/services/createApi";
+import { Loader } from "../shared/atoms/Loader";
 
 const Location = () => {
   const [infoGraphic, setInfoGraphic] = useState<InfoGraphics>(
     InfoGraphics.Sheet
   );
-  const [sheetData, setSheetData] = useState(locationCSV);
+  const [page, setPage] = useState(0);
+  const { data: locationListing, isLoading: isLocationLoading } =
+    useGetLocationListingQuery({ offset: page });
+  const [
+    fetchSearchResults,
+    { data: searchedResults, isLoading: isSearching },
+  ] = useSearchLocationMutation();
+  const [shouldShowSearch, setShouldShowSearch] = useState(false);
 
+  // logical functions
   function onSubmitSearch(search: string) {
-    setSheetData(
-      locationCSV.filter((location) =>
-        location.userId.toLowerCase().includes(search.toLowerCase())
-      )
-    );
+    if (search) setShouldShowSearch(true);
+    else setShouldShowSearch(false);
+    fetchSearchResults({ keyword: search });
   }
 
+  // render functions
   function renderSheets() {
+    const data = shouldShowSearch ? searchedResults : locationListing;
+    if (!data) return;
+    if (isSearching) return <Loader />;
     if (infoGraphic === InfoGraphics.Sheet)
-      return <SheetsView sheetData={{ type: "Location", data: sheetData }} />;
+      return <SheetsView sheetData={{ type: "Location", data }} />;
   }
 
   function renderGraphs() {
+    if (!locationListing) return;
     if (infoGraphic === InfoGraphics.Graphs) {
-      return <GraphsView sheetData={{ type: "Location", data: sheetData }} />;
+      return (
+        <GraphsView typedSheet={{ type: "Location", data: locationListing }} />
+      );
     }
   }
 
   return (
-    <ScreenWithHeader>
+    <ScreenWithHeader isLoading={isLocationLoading}>
       <AnalyticsHeader
         title="Location"
         currentInfoGraphic={infoGraphic}

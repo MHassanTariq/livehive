@@ -45,9 +45,9 @@ const NavBarOption = ({
   return (
     <button
       onClick={onClick}
-      className={`${activeContainerStyles} mt-4 flex-row flex`}
+      className={`${activeContainerStyles} mt-4 flex-row flex items-center`}
     >
-      <div className={`h-full w-2 ${activeFlagStyles}`} />
+      <div className={`h-5 w-1 ${activeFlagStyles} rounded-r-md`} />
       <h6 className={`${activeTextStyles} text-base text-text_color px-4 py-1`}>
         {currentOption.title}
       </h6>

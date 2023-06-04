@@ -8,10 +8,11 @@ import {
   BarElement,
   Title,
 } from "chart.js";
-import { TypedSheets } from "../../store/types";
+import { TypedSheets } from "../../store/services/types";
+import { convertTypedDataToGraphData } from "../../store/adapterFunctions";
 
 interface Props {
-  sheetData: TypedSheets;
+  typedSheet: TypedSheets;
 }
 
 ChartJS.register(
@@ -28,29 +29,28 @@ const graphStyles: React.CSSProperties = {
   height: "50%",
 };
 
-const GraphsView = ({ sheetData }: Props) => {
+const GraphsView = ({ typedSheet }: Props) => {
+  function getHeaderObject(title: string) {
+    return {
+      title: {
+        display: true,
+        text: title,
+        font: {
+          size: 16,
+          weight: "bold",
+        },
+      },
+    };
+  }
+
+  const { labels, data, headers } = convertTypedDataToGraphData(typedSheet);
+
   return (
     <Bar
       style={graphStyles}
       data={{
-        labels: ["Jun", "Jul", "Aug"],
-        datasets: [
-          {
-            label: "id 1",
-            data: [5, 6, 7],
-            backgroundColor: "rgba(0,0,0,0.2)",
-            borderColor: "rgb(0,0,0)",
-            borderWidth: 1,
-          },
-          {
-            label: "id 2",
-            data: [3, 2, 1],
-          },
-          {
-            label: "id 3",
-            data: [3, 2],
-          },
-        ],
+        labels: labels,
+        datasets: data,
       }}
       options={{
         plugins: {
@@ -59,26 +59,8 @@ const GraphsView = ({ sheetData }: Props) => {
           },
         },
         scales: {
-          y: {
-            title: {
-              display: true,
-              text: "People",
-              font: {
-                size: 16,
-                weight: "bold",
-              },
-            },
-          },
-          x: {
-            title: {
-              display: true,
-              text: "Regions",
-              font: {
-                size: 16,
-                weight: "bold",
-              },
-            },
-          },
+          y: getHeaderObject(headers.y),
+          x: getHeaderObject(headers.x),
         },
       }}
     />

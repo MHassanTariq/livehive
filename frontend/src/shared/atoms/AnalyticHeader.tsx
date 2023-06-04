@@ -1,5 +1,5 @@
 import { SubmitHandler, useForm } from "react-hook-form";
-import { InfoGraphics } from "../../store/types";
+import { InfoGraphics } from "../../store/services/types";
 import TitledSwitch from "./TitledSwitch";
 
 interface Props {
