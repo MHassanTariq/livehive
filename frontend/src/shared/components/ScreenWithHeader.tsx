@@ -2,7 +2,6 @@ import React from "react";
 import Header from "../atoms/Header";
 import { useNavigate } from "react-router-dom";
 import NavBar from "../atoms/NavBar";
-import { MutatingDots } from "react-loader-spinner";
 import { Loader } from "../atoms/Loader";
 
 interface Props {
@@ -15,7 +14,7 @@ const ScreenWithHeader = ({ children, isLoading }: Props) => {
 
   // logication functions
   function onClickLogo() {
-    navigate("/");
+    navigate("/location");
   }
 
   // render functions

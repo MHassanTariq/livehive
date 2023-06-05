@@ -17,7 +17,7 @@ const SheetViews = ({ sheetData, stats }: Props) => {
   return (
     <div className="mt-5">
       <DataStatsWithPageBtns {...stats} />
-      <div className={`grid grid-cols-${keys} bg-primary p-1`}>
+      <div className={`grid grid-cols-${keys} bg-primary p-1 `}>
         {csvData.map((data, index) => (
           <div
             className="flex justify-center items-center bg-bg_color m-0.5"

@@ -63,7 +63,7 @@ const WeblinkTraffic = () => {
   return (
     <ScreenWithHeader isLoading={isWeblinkLoading}>
       <AnalyticsHeader
-        title="Apps"
+        title="Weblink"
         currentInfoGraphic={infoGraphic}
         onSubmitSearch={onSubmitSearch}
         onChangeInfoGraphic={setInfoGraphic}
