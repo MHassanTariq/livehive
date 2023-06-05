@@ -30,8 +30,8 @@ async function findAppSession(req: Request<ListingQuery>, res: Response) {
     app_package: res.app_package,
     app_name: res.app_name,
     duration: res.duration,
-    start_time: convertDateToString(res.start_time),
-    end_time: convertDateToString(res.end_time),
+    start_time: res.start_time?.toISOString(),
+    end_time: res.start_time?.toISOString(),
   }));
   const count = await App.count();
   const response: ListingResponse<AppSessionResponse> = { result, count };

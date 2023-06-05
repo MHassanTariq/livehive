@@ -41,17 +41,12 @@ async function fetchLocation(req: Request<ListingQuery>, res: Response) {
   res.json(response);
 }
 
-async function getLocationTrends(
-  req: Request<LocationTrend>,
-  res: Response,
-  next: NextFunction
-) {
+async function getLocationTrends(req: Request<LocationTrend>, res: Response) {
   const trendQuery = getTrendsFromQuery(req);
   const response = await calculateLocationTrendsForAUser(
     trendQuery,
     "Test User"
   );
-  next(new Error("Testing"));
   res.json(response);
 }
 

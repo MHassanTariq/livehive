@@ -85,7 +85,5 @@ export async function calculateLocationTrendsForAUser(
       },
     },
   ]);
-  const result: Record<string, { city: string; start: Date; end: Date }> = {};
-
-  return result;
+  return dbQuery;
 }
