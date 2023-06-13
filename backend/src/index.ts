@@ -20,6 +20,11 @@ export async function initServer() {
   app.use(cors());
   app.use(bodyParser.urlencoded({ extended: false }));
 
+  // status
+  app.use("/status", (req, res) => {
+    res.json({ msg: "Server is active" });
+  });
+  
   // routers
   app.use("/location", locationRouter());
   app.use("/app", appSessionRouter());
