@@ -33,7 +33,7 @@ export async function initServer() {
   app.use("/apps_usage", appSessionRouter());
   app.use("/weblink", weblinkRouter());
   app.use("/sms_data", smsDataRouter());
-  app.use("/lv2_raw_data", lv2RawDataRouter());
+  app.use("/apps_raw_data", lv2RawDataRouter());
 
   app.use("/upload", uploadCsvRouter());
 
