@@ -7,6 +7,7 @@ export function appSessionRouter() {
   router.get("/", appController.findAppSession);
   router.get("/trends", appController.getLastMonthsTrends);
   router.get("/search", appController.searchAppSessions);
+  router.post("/upload_session_data", appController.updateSessionData);
 
   return router;
 }

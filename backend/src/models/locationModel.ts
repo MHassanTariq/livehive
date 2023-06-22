@@ -1,18 +1,13 @@
 import mongoose from "mongoose";
 
 const LocationSchema = new mongoose.Schema({
-  user: {
-    type: Object,
-    name: { type: String, required: true },
-    email: String,
-    required: true,
-  },
+  user_id: String,
   lat: Number,
   lng: Number,
   alt: Number,
   accuracy: Number,
   isRoaming: Boolean,
-  time: Date,
+  time: Number,
   location: {
     city: String,
     country: String,

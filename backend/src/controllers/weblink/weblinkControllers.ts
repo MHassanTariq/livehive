@@ -6,6 +6,7 @@ import {
 } from "../../utils.ts/helper";
 import Weblink from "../../models/webLink";
 import { searchWeblinkResults } from "./search";
+import { updateWeblinkTrafficData } from "./updateWeblinkData";
 
 async function fetchWeblinkListing(req: Request<ListingQuery>, res: Response) {
   const { limit, offset } = getLimitAndOffsetFromQuery(req);
@@ -17,13 +18,11 @@ async function fetchWeblinkListing(req: Request<ListingQuery>, res: Response) {
   const weblinkResponse: WeblinkResponse[] = dbQuery.map((res) => {
     const response: WeblinkResponse = {
       app_name: res.app_name,
-      user: res.user,
+      user: res.user_id ?? "",
       _id: res._id,
       link: res.link,
+      time: new Date(res.timestamp ?? Date.now()).toISOString(),
     };
-    if (res.time) {
-      response.time = res.time.toISOString();
-    }
     return response;
   });
 
@@ -44,4 +43,14 @@ async function searchWeblink(req: Request<Search>, res: Response) {
   return res.json(response);
 }
 
-export default { fetchWeblinkListing, searchWeblink };
+async function updateWeblinkTraffic(req: Request<Search>, res: Response) {
+  const body = req.body;
+  if (!body) {
+    return res.json("Invalid req body");
+  }
+  const response = await updateWeblinkTrafficData(body);
+
+  return res.json(response);
+}
+
+export default { fetchWeblinkListing, searchWeblink, updateWeblinkTraffic };

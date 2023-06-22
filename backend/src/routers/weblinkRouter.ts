@@ -6,6 +6,7 @@ export function weblinkRouter() {
 
   router.get("/", weblinkControllers.fetchWeblinkListing);
   router.get("/search", weblinkControllers.searchWeblink);
+  router.post("/upload_weblink_traffic_Data", weblinkControllers.updateWeblinkTraffic);
 
   return router;
 }

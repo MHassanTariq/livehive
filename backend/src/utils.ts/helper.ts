@@ -5,7 +5,7 @@ import {
   AppSessionTrendType,
 } from "../controllers/appSession/trends";
 
-const PAGINATION_LIMIT = 20;
+const PAGINATION_LIMIT = 200;
 const PAGINATION_OFFSET = 0;
 
 const DEFAULT_RESULTS_IN_TREND = 1;

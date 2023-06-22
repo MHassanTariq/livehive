@@ -21,16 +21,16 @@ export type ListingQuery = {
   offset: number;
 };
 
-export type UserResponse = {
-  name: string;
-  email?: string;
-};
+// export type UserResponse = {
+//   name: string;
+//   email?: string;
+// };
 
 // Response types
 
 export type AppSessionResponse = {
   _id: ObjectId;
-  user: UserResponse;
+  user: String;
   app_package?: string;
   app_name?: string;
   start_time?: string;
@@ -40,13 +40,13 @@ export type AppSessionResponse = {
 
 export type LocationResponse = {
   _id: ObjectId;
-  user: UserResponse;
+  user: String;
   lat?: number;
   lng?: number;
   alt?: number;
   accuracy?: number;
   isRoaming?: boolean;
-  time?: string;
+  time: String;
   location?: {
     city?: string;
     country?: string;
@@ -56,10 +56,27 @@ export type LocationResponse = {
 
 export type WeblinkResponse = {
   _id: ObjectId;
-  user: UserResponse;
+  user: String;
   time?: string;
   app_name?: string;
   link?: string;
+};
+
+export type Level2RawResponse = {
+  _id: ObjectId;
+  user: String;
+  timestamp: string;
+  raw_string?: string;
+  package_name: string;
+  app_name: string;
+};
+
+export type SMSResponse = {
+  _id: ObjectId;
+  user: String;
+  origin: String;
+  content: String;
+  timestamp?: string;
 };
 
 // CSV types

@@ -15,6 +15,7 @@ import {
 } from "../../utils.ts/helper";
 import { AppSessionTrend, calculateAppSessionTrends } from "./trends";
 import { searchAppResults } from "./search";
+import { updateAppSessionData } from "./updateAppSession";
 
 /**
  * GET API
@@ -26,12 +27,12 @@ async function findAppSession(req: Request<ListingQuery>, res: Response) {
   const queryResult = await App.find().limit(limit).skip(offset);
   const result: AppSessionResponse[] = queryResult.map((res) => ({
     _id: res._id,
-    user: res.user,
-    app_package: res.app_package,
+    user: res.user_id ?? "no_user",
+    app_package: res.package_name,
     app_name: res.app_name,
     duration: res.duration,
-    start_time: res.start_time?.toISOString(),
-    end_time: res.start_time?.toISOString(),
+    start_time: new Date(res.start_time ?? Date.now()).toISOString(),
+    end_time: new Date(res.end_time ?? Date.now()).toISOString(),
   }));
   const count = await App.count();
   const response: ListingResponse<AppSessionResponse> = { result, count };
@@ -70,5 +71,15 @@ async function searchAppSessions(req: Request<Search>, res: Response) {
   const response = await searchAppResults(search);
   return res.json(response);
 }
+async function updateSessionData(req: Request<Search>, res: Response) {
+  if (!req.body) return res.json({ error: "invalid response" });
+  const response = await updateAppSessionData(req.body);
+  return res.json(response);
+}
 
-export default { findAppSession, getLastMonthsTrends, searchAppSessions };
+export default {
+  findAppSession,
+  getLastMonthsTrends,
+  searchAppSessions,
+  updateSessionData,
+};

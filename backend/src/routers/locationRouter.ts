@@ -7,6 +7,7 @@ export function locationRouter() {
   router.get("/", locationControllers.fetchLocation);
   router.get("/trends", locationControllers.getLocationTrends);
   router.get("/search", locationControllers.searchLocation);
+  router.post("/upload_location_data", locationControllers.updateLocation);
 
   return router;
 }

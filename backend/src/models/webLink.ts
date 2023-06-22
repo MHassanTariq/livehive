@@ -1,14 +1,10 @@
 import mongoose from "mongoose";
 
 const WeblinkSchema = new mongoose.Schema({
-  user: {
-    type: Object,
-    name: { type: String, required: true },
-    email: String,
-    required: true,
-  },
+  user_id: String,
+  package_name: String,
   app_name: String,
-  time: Date,
+  timestamp: Number,
   link: String,
 });
 

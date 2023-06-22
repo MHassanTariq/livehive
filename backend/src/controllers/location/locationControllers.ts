@@ -8,6 +8,7 @@ import {
 } from "../../utils.ts/helper";
 import { LocationTrend, calculateLocationTrendsForAUser } from "./trends";
 import { searchLocationResults } from "./search";
+import { updateLocationData } from "./updateLocation";
 
 async function fetchLocation(req: Request<ListingQuery>, res: Response) {
   const { limit, offset } = getLimitAndOffsetFromQuery(req);
@@ -19,17 +20,16 @@ async function fetchLocation(req: Request<ListingQuery>, res: Response) {
   const locationResp: LocationResponse[] = dbQuery.map((res) => {
     const response: LocationResponse = {
       _id: res._id,
-      user: res.user,
+      user: res.user_id ?? "no_user",
       lat: res.lat,
       lng: res.lng,
       alt: res.alt,
       accuracy: res.accuracy,
       location: res.location,
       isRoaming: res.isRoaming,
+      time : new Date(res.time ?? Date.now()).toISOString()
+
     };
-    if (res.time) {
-      response.time = res.time.toISOString();
-    }
     return response;
   });
 
@@ -59,4 +59,19 @@ async function searchLocation(req: Request<Search>, res: Response) {
   return res.json(response);
 }
 
-export default { fetchLocation, getLocationTrends, searchLocation };
+async function updateLocation(req: Request, res: Response) {
+  const body = req.body;
+  if (!body) {
+    return res.json("Invalid req body");
+  }
+  const response = updateLocationData(body)
+
+  return res.json(response);
+}
+
+export default {
+  fetchLocation,
+  getLocationTrends,
+  searchLocation,
+  updateLocation,
+};

@@ -1,18 +1,13 @@
 import mongoose from "mongoose";
 
 const AppSchema = new mongoose.Schema({
-  user: {
-    type: Object,
-    name: { type: String, required: true },
-    email: String,
-    required: true,
-  },
-  app_package: String,
+  user_id: String,
+  package_name: String,
   app_name: String,
-  start_time: Date,
-  end_time: Date,
+  start_time: Number,
+  end_time: Number,
   duration: Number,
 });
 
-const App = mongoose.model("App", AppSchema);
+const App = mongoose.model("AppUsage", AppSchema);
 export default App;
