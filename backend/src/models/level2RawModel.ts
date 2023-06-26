@@ -8,5 +8,5 @@ const level2RawModel = new mongoose.Schema({
   timestamp: Number,
 });
 
-const Level2RawModel = mongoose.model("SmsData", level2RawModel);
+const Level2RawModel = mongoose.model("AppsRawData", level2RawModel);
 export default Level2RawModel;
